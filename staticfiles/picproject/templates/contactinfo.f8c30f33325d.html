@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+    
+    {% block content %}
+    
+  
+  <!-- Section-->
+  <section class="py-5">
+
+    <div class="container px-4 px-lg-5 mt-1" data-aos="fade-up" data-aos-delay="100">
+      <a href="#" class="read-more fw-bolder fs-2"><p class="text-center">Messages</p></a>
+        <div class="row">
+            <center>
+                <div class="col-8">
+                    <br><br>
+                    <!--<h3>Shipped Items</h3>-->
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="table-dark">
+                          <tr>
+                            
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Message</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for cinf in cinfo %}
+                          <tr>
+                            
+                            <td>{{cinf.full_name}}</a></td>
+                            <td>{{cinf.email}}</td>
+                            <td>{{cinf.subject}}</td>
+                            <td>{{cinf.message}}</td>
+                            
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                </div>
+            </center>
+        </div>
+    </div>
+  </section>
+    {% endblock %}

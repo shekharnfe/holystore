@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+    
+    {% block content %}
+    
+
+    
+        <!-- Header-->
+        <header class="bg-secondary py-5 mt-1">
+            <div class="container-fluid px-4 px-lg-5">
+            <div style="height: 20px;">
+                <div class="row row-cols-1 row-cols-lg-3">
+                    <div class="col col-lg-3">
+                
+                    </div>
+                    <div class="col col-lg-6">
+                        {% if messages %}
+                            <div class="alert alert-primary  bg-warning" role="alert">
+                            {% for message in messages %}
+                             {{ message }}
+                            {% endfor %}  
+                            </div>
+                         {% endif %}
+                    </div>
+                    <div class="col col-lg-3">
+                        
+                    </div>
+                    
+                </div>
+              </div>
+            </div>
+        </header>
+        
+        <!-- Section-->
+        <section class="py-5 bg-light">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                  {% for product in products %}  
+                    {% if product.is_sale %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <div class="badge text-bg-danger text-white position-absolute" style="top:0.5rem; right:0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.image.url }}" alt="..." style="width:100%"/>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                                    <!-- Product price-->
+                                    <strike>&#8377;{{ product.price }}</strike>&nbsp;
+                                    &#8377;{{ product.sale_price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-warning mt-auto text-white fw-bolder" href="{% url 'product' product.id %}">View product</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.image.url }}" alt="..." style="width:100%"/>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                                    <!-- Product price-->
+                                    {{ product.price }}
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-warning mt-auto text-white fw-bolder" href="{% url 'product' product.id %}">View product</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+        

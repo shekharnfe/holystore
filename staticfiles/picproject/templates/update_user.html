@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+    
+    {% block content %}
+    
+    <section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5" data-aos="fade-up" data-aos-delay="100">
+      <a href="#" class="read-more fw-bolder fs-2"><p class="text-center">Update your profile</p></a>
+        <div class="row">
+          
+          <div class="col-lg-4 offset-lg-4">
+            <form action="{% url 'update_user' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% if messages %}
+              <div class="alert alert-primary" role="alert">
+                    {% for message in messages %}
+                      {{ message }}
+                    {% endfor %}  
+              </div>
+                {% endif %}
+                <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                  
+               {{ user_form.as_p }} 
+               <button class="btn btn-warning w-100 py-2" type="submit">Update Profile</button>
+               </div>
+            </form>
+            <br><br> <br><br><br><br><br>  
+          </div> 
+
+        </div>
+    </div>
+    </section>
+    {% endblock %}

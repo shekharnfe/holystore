@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+    <!-- Navigation-->
+    {% block content %}
+    {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}  
+        </div>
+    {% endif %}
+      
+    <!-- Product section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="..."></div>
+                <div class="col-md-6">
+                    <div class="small mb-1"></div>
+                    <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
+                    <div class="fs-5 mb-5">
+                        {% if product.is_sale %}
+                        <span class="text-decoration-line-through">&#8377;{{ product.price }}</span>
+                        <span>&#8377;{{ product.sale_price }}</span>
+                        {% else %}
+                        <span>&#8377;{{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    <p class="lead">{{ product.description }}</p>
+                    <div class="d-flex">
+                        <div class="col-md-2">Quantity:</div>
+                        <div class="col-md-2">
+                      <select class="form-select" id="qty-cart">
+                        
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                        </div>
+                        
+                    <button type="button" value="{{ product.id }}" class="btn btn-warning" id="add-cart">Add to Cart</button>
+                    
+                    <a href="{% url 'home' %}" class="btn btn-danger">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+<script>
+    //check if button pressed
+$(document).on('click','#add-cart',function(e){
+    e.preventDefault();
+    $.ajax({    
+            type: 'POST',
+            url: "{% url 'cart_add' %}",
+            data: {
+                    product_id: $('#add-cart').val(),
+                    product_qty: $('#qty-cart option:selected').text(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+            },
+
+            success: function(json){
+                    //console.log(json)
+                    document.getElementById("cart_quantity").textContent = json.qty
+                    location.reload();
+            },
+            
+            error: function(xhr , errmsg , err){
+
+            }
+
+        });
+
+})
+
+
+</script>
+</section>
+{% endblock %}
+    
+    

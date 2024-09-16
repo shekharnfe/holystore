@@ -1,0 +1,2 @@
+web: gunicorn picproject.wsgi --log-file
+web: python manage.py migrate && gunicorn picproject.wsgi 
