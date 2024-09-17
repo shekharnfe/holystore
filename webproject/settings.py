@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,17 +85,18 @@ WSGI_APPLICATION = 'webproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'mydb',
-        'USER': 'root',
-        'PASSWORD': 'sa123',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-        #'NAME': 'railway',
-        #'USER': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql', 
+        #'NAME': 'mydb',
+        #'USER': 'root',
+        #'PASSWORD': 'sa123',
+        #'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        #'PORT': '3306',
+        'NAME': 'railway',
+        'USER': 'postgres',
         #'PASSWORD': os.environ.get('DB_PASSWORD_OH'),
-        #'HOST': 'postgres.railway.internal',   # Or an IP Address that your DB is hosted on
-        #'PORT': '5432',
+        'PASSWORD': os.environ['DB_PASSWORD_OH'],
+        'HOST': 'postgres.railway.internal',   # Or an IP Address that your DB is hosted on
+        'PORT': '5432',
     }
 }
 
