@@ -18,6 +18,8 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#DATABASE_URL="postgresql://postgres:MLAlcpQCuHQRfdHzPHqocfFKGPtOJqxL@junction.proxy.rlwy.net:21019/railway"
+
 load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -85,19 +87,15 @@ WSGI_APPLICATION = 'webproject.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+             #"default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),  
     'default': {
         'ENGINE': 'django.db.backends.postgresql', 
-        #'NAME': 'mydb',
-        #'USER': 'root',
-        #'PASSWORD': 'sa123',
-        #'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        #'PORT': '3306',
         'NAME': 'railway',
         'USER': 'postgres',
         #'PASSWORD': os.environ.get('DB_PASSWORD_OH'),
         'PASSWORD': os.environ['DB_PASSWORD_OH'],
-        'HOST': 'postgres.railway.internal',   # Or an IP Address that your DB is hosted on
-        'PORT': '5432',
+        'HOST': 'junction.proxy.rlwy.net',   # Or an IP Address that your DB is hosted on
+        'PORT': '21019',
     }
 }
 
