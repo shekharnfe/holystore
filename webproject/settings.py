@@ -94,7 +94,7 @@ DATABASES = {
         'USER': 'postgres',
         #'PASSWORD': os.environ.get('DB_PASSWORD_OH'),
         'PASSWORD': os.environ['DB_PASSWORD_OH'],
-        'HOST': 'postgres.railway.internal',   # Or an IP Address that your DB is hosted on
+        'HOST': 'junction.proxy.rlwy.net:21019',   # Or an IP Address that your DB is hosted on
         'PORT': '5432',
     }
 }
