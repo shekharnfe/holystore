@@ -12,13 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+#import dj_database_url
 
 from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATABASE_URL="postgresql://postgres:MLAlcpQCuHQRfdHzPHqocfFKGPtOJqxL@junction.proxy.rlwy.net:21019/railway"
+#DATABASE_URL="postgresql://postgres:MLAlcpQCuHQRfdHzPHqocfFKGPtOJqxL@junction.proxy.rlwy.net:21019/railway"
 
 load_dotenv()
 # Quick-start development settings - unsuitable for production
