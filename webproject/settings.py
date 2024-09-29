@@ -30,8 +30,8 @@ SECRET_KEY = 'django-insecure-rhc&k%1pzk=7hxq$j(x70x@(te-!pz9qe*mdw0*=mb6$^m5@*@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
-#CSRF_TRUSTED_ORIGINS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
+ALLOWED_HOSTS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
 #CSRF_TRUSTED_ORIGINS = ['https://holystore-production.up.railway.app']
 
 
