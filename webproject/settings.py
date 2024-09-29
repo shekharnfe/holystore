@@ -31,8 +31,8 @@ SECRET_KEY = 'django-insecure-rhc&k%1pzk=7hxq$j(x70x@(te-!pz9qe*mdw0*=mb6$^m5@*@
 DEBUG = True
 
 ALLOWED_HOSTS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
-#CSRF_TRUSTED_ORIGINS = ['https://holystore-production.up.railway.app']
+#CSRF_TRUSTED_ORIGINS = ['holystore-production.up.railway.app','https://holystore-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://holystore-production.up.railway.app']
 
 
 # Application definition
@@ -92,8 +92,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql', 
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': os.environ.get('DB_PASSWORD_OH'),
-        #'PASSWORD': os.environ['DB_PASSWORD_OH'],
+        #'PASSWORD': os.environ.get('DB_PASSWORD_OH'),
+        'PASSWORD': os.environ['DB_PASSWORD_OH'],
         'HOST': 'junction.proxy.rlwy.net',   # Or an IP Address that your DB is hosted on
         'PORT': '21019',
     }
