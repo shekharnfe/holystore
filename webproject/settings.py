@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 #DATABASE_URL="postgresql://postgres:MLAlcpQCuHQRfdHzPHqocfFKGPtOJqxL@junction.proxy.rlwy.net:21019/railway"
 
-load_dotenv()
+#load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'cart',
     'payment',
     'whitenoise.runserver_nostatic',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 #MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
+
+#Add paypal settings
+#set sandbox to true
+PAYPAL_TEST = True
+PAYPAL_RECEIVER_EMAIL = 'sb-mihp014724188@business.example.com' # Business sandbox account
