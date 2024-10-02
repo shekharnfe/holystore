@@ -214,7 +214,7 @@ def billing_info(request):
             'currency_code': 'INR',
             'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
             'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
-            'cancel_return': 'https://{}{}'.format(host, reverse("paypal_failed")),
+            'cancel_return': 'https://{}{}'.format(host, reverse("paypal-failed")),
 }
         # create actual paypal button
         paypal_form = PayPalPaymentsForm(initial=paypal_dict)
