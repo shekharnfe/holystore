@@ -231,12 +231,12 @@ def billing_info(request):
         if request.user.is_authenticated:
            # Get the billing form
            billing_form = PaymentForm()
-           return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
+           return render(request,"payment/billing_info.html",{"payment": payment,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
         else:
             # Not Logged in
             # Get the billing form
             billing_form = PaymentForm()
-            return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
+            return render(request,"payment/billing_info.html",{"payment": payment,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
 
         shipping_form = request.POST 
         return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_form":shipping_form})
