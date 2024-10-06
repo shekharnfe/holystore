@@ -11,6 +11,8 @@ from django.urls import reverse
 from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import settings
 import uuid # unique user id for duplicate orders
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -203,22 +205,26 @@ def billing_info(request):
         request.session['my_shipping'] = my_shipping
 
         # Get the host
-        host = request.get_host()
+        #host = request.get_host()
         # create paypal form dictionary
-        paypal_dict = {
-            'business' : settings.PAYPAL_RECEIVER_EMAIL,
-            'amount' : totals,
-            'item_name': 'your order',
-            'no_shipping': '2',
-            'invoice': str(uuid.uuid4()),
-            'currency_code': 'INR',
-            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
-            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
-            'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
-}
+        #paypal_dict = {
+            #'business' : settings.PAYPAL_RECEIVER_EMAIL,
+            #'amount' : totals,
+           # 'item_name': 'your order',
+            #'no_shipping': '2',
+           # 'invoice': str(uuid.uuid4()),
+           # 'currency_code': 'INR',
+           # 'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
+           # 'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
+           # 'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
+#}
         # create actual paypal button
-        paypal_form = PayPalPaymentsForm(initial=paypal_dict)
+        #paypal_form = PayPalPaymentsForm(initial=paypal_dict)
 
+        amount = totals*100
+        currency = 'INR'
+        client = razorpay.Client(auth=("rzp_test_UL7mHKJXTw8MtZ", "YDIpnNeLOMUFiSQz6LEY2W5t"))
+        payment = client.order.create({'amount':amount , 'currency': 'INR','payment_capture':'1'})
 
 
         #Check to see ifthe user is logged in
@@ -258,6 +264,7 @@ def checkout(request):
         return render(request,"payment/checkout.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_form":shipping_form})
 
 
+@csrf_exempt
 def payment_success(request):
     return render(request, "payment/payment_success.html", {})
 
