@@ -221,7 +221,7 @@ def billing_info(request):
         # create actual paypal button
         #paypal_form = PayPalPaymentsForm(initial=paypal_dict)
 
-        amount = totals*100
+        amount = int(totals*100)
         currency = 'INR'
         client = razorpay.Client(auth=("rzp_test_UL7mHKJXTw8MtZ", "YDIpnNeLOMUFiSQz6LEY2W5t"))
         payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
