@@ -224,7 +224,7 @@ def billing_info(request):
         amount = totals*100
         currency = 'INR'
         client = razorpay.Client(auth=("rzp_test_UL7mHKJXTw8MtZ", "YDIpnNeLOMUFiSQz6LEY2W5t"))
-        payment = client.order.create({'amount':amount , 'currency': currency,'payment_capture':'1'})
+        payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
 
 
         #Check to see ifthe user is logged in
