@@ -115,6 +115,12 @@ def category(request,var):
 
 def about(request):
     return render(request, "about.html",{})
+def TnC(request):
+    return render(request, "TnC.html",{})
+def ppolicy(request):
+    return render(request, "ppolicy.html",{})
+def rpolicy(request):
+    return render(request, "rpolicy.html",{})
 
 
 def login_user(request):
