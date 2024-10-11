@@ -205,38 +205,38 @@ def billing_info(request):
         request.session['my_shipping'] = my_shipping
 
         # Get the host
-       # host = request.get_host()
+        host = request.get_host()
         # create paypal form dictionary
-        #paypal_dict = {
-            #'business' : settings.PAYPAL_RECEIVER_EMAIL,
-            #'amount' : totals,
-            #'item_name': 'your order',
-            #'no_shipping': '2',
-            #'invoice': str(uuid.uuid4()),
-            #'currency_code': 'INR',
-            #'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
-            #'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
-            #'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
-#}
+        paypal_dict = {
+            'business' : settings.PAYPAL_RECEIVER_EMAIL,
+            'amount' : totals,
+            'item_name': 'your order',
+            'no_shipping': '2',
+            'invoice': str(uuid.uuid4()),
+            'currency_code': 'INR',
+            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
+            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
+            'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
+}
         # create actual paypal button
-        #paypal_form = PayPalPaymentsForm(initial=paypal_dict)
+        paypal_form = PayPalPaymentsForm(initial=paypal_dict)
 
-        amount = int(totals*100)
-        currency = 'INR'
-        client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
-        payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
+        #amount = int(totals*100)
+        #currency = 'INR'
+        #client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
+        #payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
 
 
         #Check to see ifthe user is logged in
         if request.user.is_authenticated:
            # Get the billing form
            billing_form = PaymentForm()
-           return render(request,"payment/billing_info.html",{"payment":payment,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
+           return render(request,"payment/billing_info.html",{"paypal_form":paypal_form,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
         else:
             # Not Logged in
             # Get the billing form
             billing_form = PaymentForm()
-            return render(request,"payment/billing_info.html",{"payment":payment,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
+            return render(request,"payment/billing_info.html",{"paypal_form":paypal_form,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
 
         shipping_form = request.POST 
         return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_form":shipping_form})
