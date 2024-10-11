@@ -58,8 +58,8 @@
                         </div>
                       </div>
                       <br><br>
-                    <center> {{ paypal_form.render }}</center>
-                  <!--<form action="{% url 'payment_success' %}" method="POST">   
+                    <!--<center> {{ paypal_form.render }}</center>-->
+                  <form action="{% url 'process_order' %}" method="POST">   
                     <script
    src="https://checkout.razorpay.com/v1/checkout.js"
     data-key="rzp_test_UL7mHKJXTw8MtZ" 
@@ -75,14 +75,14 @@
     data-theme.color="#F37254"
 ></script>  
 <input type="hidden" custom="Hidden Element" name="hidden"/>
-</form>  -->
+</form>  
                     
 
 
 
 
                       <br><br>
-                      <div class="card">
+                      <!--<div class="card">
                         <div class="card-header">
                           Billing Info
                         </div>
@@ -98,9 +98,11 @@
                      </form>
                       <br><br>
                 </div>
-            </div>    
+            </div>-->    
 
-        </div>    
+        </div> 
+      </div>
+    </div>   
     
     
 {% endblock %}
