@@ -222,8 +222,8 @@ def billing_info(request):
         currency = 'INR'
         
         payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
-        payment_order_id = payment['id']
-        print(payment_order_id)
+        #payment_order_id = payment['id']
+        #print(payment)
 
         #Check to see ifthe user is logged in
         if request.user.is_authenticated:
@@ -231,7 +231,7 @@ def billing_info(request):
            #billing_form = PaymentForm()
 
            user = request.user
-           create_order = Order(user=user,full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment_order_id)
+           create_order = Order(user=user,full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment['id'])
            create_order.save()
            
             
@@ -263,11 +263,11 @@ def billing_info(request):
            current_user.update(old_cart="")                           
 
 
-           return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST}) 
+           return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"payment":payment}) 
         else:
             # not logged in
             # create order
-            create_order = Order(full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment_order_id)
+            create_order = Order(full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment['id'])
             create_order.save()
 
             #Add order items
@@ -292,7 +292,7 @@ def billing_info(request):
 
              
             #billing_form = PaymentForm()
-            return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST})
+            return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"payment":payment})
 
 
 
