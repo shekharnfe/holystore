@@ -112,12 +112,14 @@ def process_order(request):
 
         # create an order
 
-
+        
         if request.user.is_authenticated:
             user = request.user
             create_order = Order(user=user,full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid)
             create_order.save()
-
+           
+            
+            
             #Add order items
             #Get the order ID
             order_id = create_order.pk
@@ -204,42 +206,99 @@ def billing_info(request):
         my_shipping = request.POST
         request.session['my_shipping'] = my_shipping
 
-        # Get the host
-        host = request.get_host()
-        # create paypal form dictionary
-        paypal_dict = {
-            'business' : settings.PAYPAL_RECEIVER_EMAIL,
-            'amount' : totals,
-            'item_name': 'your order',
-            'no_shipping': '2',
-            'invoice': str(uuid.uuid4()),
-            'currency_code': 'INR',
-            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
-            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
-            'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
-}
-        # create actual paypal button
-        paypal_form = PayPalPaymentsForm(initial=paypal_dict)
+        # Gather order info
+        full_name = my_shipping['shipping_full_name']
+        email = my_shipping['shipping_email']
+        # create shipping address from session info
+        shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
+        amount_paid = totals
 
-        #amount = int(totals*100)
-        #currency = 'INR'
-        #client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
-        #payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
 
+
+
+        my_payment_id = str(uuid.uuid4())
+        client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
+        amount = int(totals*100)
+        currency = 'INR'
+        
+        payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
+        payment_order_id = payment['id']
+        print(payment_order_id)
 
         #Check to see ifthe user is logged in
         if request.user.is_authenticated:
            # Get the billing form
-           billing_form = PaymentForm()
-           return render(request,"payment/billing_info.html",{"paypal_form":paypal_form,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
-        else:
-            # Not Logged in
-            # Get the billing form
-            billing_form = PaymentForm()
-            return render(request,"payment/billing_info.html",{"paypal_form":paypal_form,"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST,"billing_form":billing_form})
+           #billing_form = PaymentForm()
 
-        shipping_form = request.POST 
-        return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_form":shipping_form})
+           user = request.user
+           create_order = Order(user=user,full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment_order_id)
+           create_order.save()
+           
+            
+            
+            #Add order items
+            #Get the order ID
+           order_id = create_order.pk
+            # Get Product info
+           for product in cart_products():
+                # Get product ID
+                product_id = product.id
+                #Get product price
+                if product.is_sale:
+                    price = product.sale_price
+                else:
+                    price = product.price
+
+                # Get quantity
+                for key,value in quantities().items():
+                    if int(key) == product.id:
+                        # create order item
+                        create_order_item = OrderItem(order_id=order_id,product_id=product_id,user=user,quantity=value,price=price)
+                        create_order_item.save() 
+            
+
+            # delete cart from database (old_cart field)
+           current_user = Profile.objects.filter(user__id=request.user.id)
+            # delete shopping cart in database (old_cart field)
+           current_user.update(old_cart="")                           
+
+
+           return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST}) 
+        else:
+            # not logged in
+            # create order
+            create_order = Order(full_name=full_name,email=email,shipping_address=shipping_address,amount_paid=amount_paid,payment_id=payment_order_id)
+            create_order.save()
+
+            #Add order items
+            #Get the order ID
+            order_id = create_order.pk
+            # Get Product info
+            for product in cart_products():
+                # Get product ID
+                product_id = product.id
+                #Get product price
+                if product.is_sale:
+                    price = product.sale_price
+                else:
+                    price = product.price
+
+                # Get quantity
+                for key,value in quantities().items():
+                    if int(key) == product.id:
+                        # create order item
+                        create_order_item = OrderItem(order_id=order_id,product_id=product_id,quantity=value,price=price)
+                        create_order_item.save()
+
+             
+            #billing_form = PaymentForm()
+            return render(request,"payment/billing_info.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_info":request.POST})
+
+
+
+           
+
+        
     else:
         messages.success(request,"Access Denied")
         return redirect('home')
@@ -266,6 +325,19 @@ def checkout(request):
 
 @csrf_exempt
 def payment_success(request):
+        
+    if request.method == 'POST':
+        a = request.POST
+        order_id = ''
+        for key , val in a.items():
+            if key == 'razorpay_order_id':
+                order_id = val
+                break
+        user1 = Order.objects.filter(payment_id = order_id).first() 
+        user1.paid = True
+        user1.save()
+
+          
     return render(request, "payment/payment_success.html", {})
 
 def payment_failed(request):

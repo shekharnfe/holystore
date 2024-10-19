@@ -154,5 +154,7 @@ MEDIA_URL = 'media/'
 
 #Add paypal settings
 #set sandbox to true
-PAYPAL_TEST = True
-PAYPAL_RECEIVER_EMAIL = 'sb-mihp014724188@business.example.com' # Business sandbox account
+#PAYPAL_TEST = True
+#PAYPAL_RECEIVER_EMAIL = 'sb-mihp014724188@business.example.com' # Business sandbox account
+#RAZORPAY_API_KEY = ''
+#RAZORPAY_API_SECRET_KEY = ''
