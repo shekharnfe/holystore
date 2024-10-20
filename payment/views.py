@@ -223,7 +223,7 @@ def billing_info(request):
         
         payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
         #payment_order_id = payment['id']
-        #print(payment)
+        print(payment)
 
         #Check to see ifthe user is logged in
         if request.user.is_authenticated:
