@@ -329,11 +329,25 @@ def payment_success(request):
     if request.method == 'POST':
         a = request.POST
         order_id = ''
+        data = {}
         for key , val in a.items():
-            if key == 'razorpay_order_id':
+            if key == 'razorpay_order_id' :
+                data['razorpay_order_id'] = val
                 order_id = val
-                break
+
+            elif key == 'razorpay_payment_id' :
+                 data['razorpay_payment_id'] = val
+
+            elif key == 'razorpay_signature' :
+                 data['razorpay_signature'] = val        
         user1 = Order.objects.filter(payment_id = order_id).first() 
+
+        client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
+        check = client.utility.verify_payment_signature(data)
+
+        if check:
+            return render(request, "payment/payment_failed.html", {})
+
         user1.paid = True
         user1.save()
 
