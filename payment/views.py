@@ -340,7 +340,7 @@ def payment_success(request):
 
             elif key == 'razorpay_signature' :
                  data['razorpay_signature'] = val        
-        user1 = Order.objects.filter(payment_id = order_id).first() 
+        user = Order.objects.filter(payment_id = order_id).first() 
 
         client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
         check = client.utility.verify_payment_signature(data)
@@ -348,8 +348,8 @@ def payment_success(request):
         if check:
             return render(request, "payment/payment_failed.html", {})
 
-        user1.paid = True
-        user1.save()
+        user.paid = True
+        user.save()
 
           
     return render(request, "payment/payment_success.html", {})

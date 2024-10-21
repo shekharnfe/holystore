@@ -61,9 +61,9 @@
                      <!--<center> {{ paypal_form.render }}</center>-->
                   
       
-<button type="submit" id="rzp-button1">Pay with Razorpay</button>
-{% if payment %}
-<form action="{% url 'payment_success' %}" method="post">
+
+<!--{% if payment %}
+<form action="{% url 'payment_success' %}" method="post">-->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 var options = {
@@ -108,8 +108,9 @@ document.getElementById('rzp-button1').onclick = function(e){
     e.preventDefault();
 }
 </script>
-</form>
-{% endif %}
+<button type="submit" id="rzp-button1">Pay with Razorpay</button>
+<!--</form>
+{% endif %}-->
 
 
                       <br><br>
