@@ -13,7 +13,7 @@ from django.conf import settings
 import uuid # unique user id for duplicate orders
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def orders(request,pk):
@@ -322,7 +322,7 @@ def checkout(request):
         shipping_form = ShippingForm(request.POST or None)
         return render(request,"payment/checkout.html",{"cart_products":cart_products,"quantities":quantities,"totals":totals,"shipping_form":shipping_form})
 
-
+#@login_required(login_url='home')
 @csrf_exempt
 def payment_success(request):
         
@@ -342,11 +342,11 @@ def payment_success(request):
                  data['razorpay_signature'] = val        
         user = Order.objects.filter(payment_id = order_id).first() 
 
-        client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
-        check = client.utility.verify_payment_signature(data)
-
-        if check:
-            return render(request, "payment/payment_failed.html", {})
+        #client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
+        #check = client.utility.verify_payment_signature(data)
+        #print (check)
+        #if check:
+            #return render(request, "payment/payment_failed.html", {})
 
         user.paid = True
         user.save()

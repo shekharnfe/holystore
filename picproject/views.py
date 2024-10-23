@@ -20,6 +20,7 @@ def home(request):
     products=Product.objects.all()
     return render(request, "home.html",{'products':products})
 
+
 def search(request):
     if request.method == 'POST':
         searched = request.POST['searched']
