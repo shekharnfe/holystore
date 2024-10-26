@@ -350,9 +350,27 @@ def payment_success(request):
 
         user.paid = True
         user.save()
+        for key in list(request.session.keys()):
+                if key == "session_key":
+                    # Delete the key
+                    del request.session[key]
+
+        # delete cart from database (old_cart field)
+        current_user = Profile.objects.filter(user__id=request.user.id)
+            # delete shopping cart in database (old_cart field)
+        current_user.update(old_cart="")
 
           
     return render(request, "payment/payment_success.html", {})
 
 def payment_failed(request):
     return render(request, "payment/payment_failed.html", {})
+
+def paid_details(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        paymentinfo = Order.objects.all()
+        return render(request,"payment/paid_details.html",{'paymentinfo': paymentinfo})
+    else:
+        
+        messages.success(request,"Access Denied")
+        return redirect('home')

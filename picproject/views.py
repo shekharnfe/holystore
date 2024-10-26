@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm,SetPasswordForm
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm,UserInfoForm
 from payment.forms import ShippingForm
-from payment.models import ShippingAddress
+from payment.models import ShippingAddress,Order
 from django.db.models import Q
 import json
 from cart.cart import Cart
@@ -198,4 +198,6 @@ def contact(request):
 
 def contactinfo(request):
     cinfo = contactus.objects.all()
-    return render(request,'contactinfo.html',{'cinfo': cinfo})        
+    return render(request,'contactinfo.html',{'cinfo': cinfo})
+
+        

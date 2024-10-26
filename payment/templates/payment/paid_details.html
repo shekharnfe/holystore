@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+    
+    {% block content %}
+    
+  
+  <!-- Section-->
+  <section class="py-5">
+
+    <div class="container px-4 px-lg-5 mt-1" data-aos="fade-up" data-aos-delay="100">
+      <a href="#" class="read-more fw-bolder fs-2"><p class="text-center">Amount paid user details</p></a>
+        <div class="row">
+            
+                <div class="col-8">
+                    <br><br>
+                    <!--<h3>Shipped Items</h3>-->
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="table-dark">
+                          <tr>
+                            
+                            <th scope="col">Username</th>
+                            <th scope="col">FullName</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Shipping Address</th>
+                            <th scope="col">Amount paid</th>
+                            <th scope="col">Date Ordered</th>
+                            <th scope="col">Shipped</th>
+                            <th scope="col">Shipped date</th>
+                            <th scope="col">Order id</th>
+                            <th scope="col">Paid or Not</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for paymentinfo in paymentinfo %}
+                          <tr>
+                            
+                            <td>{{paymentinfo.user}}</a></td>
+                            <td>{{paymentinfo.full_name}}</td>
+                            <td>{{paymentinfo.email}}</td>
+                            <td>{{paymentinfo.shipping_address}}</td>
+                            <td>{{paymentinfo.amount_paid}}</td>
+                            <td>{{paymentinfo.date_ordered}}</td>
+                            <td>{{paymentinfo.shipped}}</td>
+                            <td>{{paymentinfo.date_shipped}}</td>
+                            <td>{{paymentinfo.payment_id}}</td>
+                            <td>{{paymentinfo.paid}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                </div>
+            
+        </div>
+    </div>
+  </section>
+    {% endblock %}

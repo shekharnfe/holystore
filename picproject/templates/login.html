@@ -2,25 +2,13 @@
 
     
     {% block content %}
-    <!--<header class="bg-light py-5 mt-4">
-      <div class="container-fluid px-4 px-lg-5">
-      <div style="height: 20px;">
-          <div class="row row-cols-1 row-cols-lg-3">
-              <div class="col col-lg-3">
-          
-              </div>
-              <div class="col col-lg-6">
-                <h6 class="display-4 fw-normal fs-7 text-center text-warning">Sign In</h6>
-                  
-              </div>
-              <div class="col col-lg-3">
-                  
-              </div>
-              
-          </div>
+    {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}  
         </div>
-      </div>
-  </header>-->
+    {% endif %}
   <section class="py-3 bg-light">
     <div class="container px-4 px-lg-5 mt-5" data-aos="fade-up">
         <div class="row">
@@ -28,13 +16,7 @@
           <div class="col-lg-4 offset-lg-4">
             <form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              {% if messages %}
-              <div class="alert alert-primary bg-warning"  role="alert">
-              {% for message in messages %}
-               {{ message }}
-              {% endfor %}  
-              </div>
-              {% endif %}
+              
               <!--<div class="badge text-bg-light fs-1 fw-normal fw-bold text-primary" style="width: 100%;">
                 Holystore
             </div>-->
