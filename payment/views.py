@@ -14,6 +14,9 @@ import uuid # unique user id for duplicate orders
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 # Create your views here.
 
 def orders(request,pk):
@@ -223,7 +226,7 @@ def billing_info(request):
         
         payment = client.order.create(dict(amount=amount , currency=currency, payment_capture=1))
         #payment_order_id = payment['id']
-        print(payment)
+        #print(payment)
 
         #Check to see ifthe user is logged in
         if request.user.is_authenticated:
@@ -341,7 +344,7 @@ def payment_success(request):
             elif key == 'razorpay_signature' :
                  data['razorpay_signature'] = val        
         user = Order.objects.filter(payment_id = order_id).first() 
-
+        #user1 = OrderItem.objects.filter(user=user)
         #client = razorpay.Client(auth=("rzp_live_50JrmHESiXLiZJ", "VhVL08D59BJQbhOdDuBXlqw0"))
         #check = client.utility.verify_payment_signature(data)
         #print (check)
@@ -350,6 +353,19 @@ def payment_success(request):
 
         user.paid = True
         user.save()
+        context= {
+                    'Name': user.full_name,
+                    'Amount': user.amount_paid,
+                    'Orderdate' : user.date_ordered,
+                    'Address' : user.shipping_address,
+                    'OrderNo' : user.payment_id,
+                    
+
+        }
+        msg_plain = render_to_string('payment/email.txt')
+        msg_html = render_to_string('payment/email.html',context=context)
+        send_mail("Greetings from Holystore",msg_plain, settings.EMAIL_HOST_USER , [user.email], html_message=msg_html)             
+
         for key in list(request.session.keys()):
                 if key == "session_key":
                     # Delete the key
@@ -360,7 +376,7 @@ def payment_success(request):
             # delete shopping cart in database (old_cart field)
         current_user.update(old_cart="")
 
-          
+    
     return render(request, "payment/payment_success.html", {})
 
 def payment_failed(request):

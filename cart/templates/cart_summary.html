@@ -56,7 +56,11 @@
             {% endfor %}
             <div align="right">
             <h3>Total :&#8377;{{ totals }}</h3>
+            {% if user.is_authenticated %}
             <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+            {% else %}
+            <a href="{% url 'register' %}" class="btn btn-success">Checkout</a>
+            {% endif %}
             </div>
             <br><br><br>
           {% else %}  

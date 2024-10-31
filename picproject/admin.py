@@ -1,6 +1,10 @@
 from django.contrib import admin
 from picproject.models import picproj,Category,Customer,Product,Order,Profile,contactus
 from django.contrib.auth.models import User
+#from django.conf.locale.es import formats as es_formats
+
+#es_formats.DATETIME_FORMAT = "d M Y H:i:s"
+
 class picadmin(admin.ModelAdmin):
     pic_display=('pic_image')
 
