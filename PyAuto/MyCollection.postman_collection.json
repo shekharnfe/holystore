@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "c189f79a-0aa5-4def-9ded-f2cc9a28e537",
+		"name": "MyCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40175730"
+	},
+	"item": [
+		{
+			"name": "GetRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2\n\n",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2\n\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostRequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"anilknit1981@gmail.com\",\r\n            \"first_name\": \"Anil\",\r\n            \"last_name\": \"Kumar\",\r\n            \"avatar\": \"https://reqres.in/img/faces/100-image.jpg\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutRequest",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"last_name\": \"Jadaun\"\r\n    \r\n    \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/972",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"972"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStudentRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is200\", () =>\r",
+							"{\r",
+							"\t//Assertion;\r",
+							"\tpm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful get request\", () =>\r",
+							"{\r",
+							"\t//Assertion;\r",
+							"\tpm.expect(pm.response.code).to.be.oneOf( [200,201] );\r",
+							"}\r",
+							");\r",
+							"\r",
+							"pm.test(\"content type header is present\", () =>\r",
+							"{\r",
+							"\t//Assertion;\r",
+							"\tpm.response.to.have.header(\"Content-Type\");\r",
+							"}\r",
+							");\r",
+							"\r",
+							"pm.test(\"content type header is application/json\", () =>\r",
+							"{\r",
+							"\t//Assertion;\r",
+							"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"}\r",
+							");\r",
+							"\r",
+							"const jsondata = pm.response.json()\r",
+							"pm.test(\"Test data type of the response\", () =>\r",
+							"{\r",
+							"\t//Assertion;\r",
+							"\tpm.expect(jsondata).to.be.an(\"object\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// json schema validation\r",
+							"var schema={\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"ID\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Gender\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Class\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Seat\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Club\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Persona\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Crush\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"BreastSize\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Strength\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Hairstyle\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Color\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Eyes\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"EyeType\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Stockings\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Accessory\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"ScheduleTime\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"ScheduleDestination\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"ScheduleAction\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"Info\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"ID\",\r",
+							"    \"Name\",\r",
+							"    \"Gender\",\r",
+							"    \"Class\",\r",
+							"    \"Seat\",\r",
+							"    \"Club\",\r",
+							"    \"Persona\",\r",
+							"    \"Crush\",\r",
+							"    \"BreastSize\",\r",
+							"    \"Strength\",\r",
+							"    \"Hairstyle\",\r",
+							"    \"Color\",\r",
+							"    \"Eyes\",\r",
+							"    \"EyeType\",\r",
+							"    \"Stockings\",\r",
+							"    \"Accessory\",\r",
+							"    \"ScheduleTime\",\r",
+							"    \"ScheduleDestination\",\r",
+							"    \"ScheduleAction\",\r",
+							"    \"Info\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Schema is valid\", () =>\r",
+							"{\r",
+							"\tpm.expect(tv4.validate(jsondata,schema)).to.be.true;\r",
+							"\t// tv4 means tiny validator version 4\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutStudentRequest",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ID\": \"2\",\r\n    \"Name\": \"Shekhar babu\",\r\n    \"Gender\": \"0\",\r\n    \"Class\": \"11\",\r\n    \"Seat\": \"14\",\r\n    \"Club\": \"1\",\r\n    \"Persona\": \"5\",\r\n    \"Crush\": \"0\",\r\n    \"BreastSize\": \"0.5\",\r\n    \"Strength\": \"0\",\r\n    \"Hairstyle\": \"2\",\r\n    \"Color\": \"Red\",\r\n    \"Eyes\": \"Red\",\r\n    \"EyeType\": \"Default\",\r\n    \"Stockings\": \"Red\",\r\n    \"Accessory\": \"0\",\r\n    \"ScheduleTime\": \"7_7_8_13_13.375_15.5_16_17.25_99_99\",\r\n    \"ScheduleDestination\": \"Spawn_Locker_Hangout_Seat_LunchSpot_Seat_Clean_Club_Locker_Exit\",\r\n    \"ScheduleAction\": \"Stand_Stand_Socialize_Sit_Socialize_Sit_Clean_SocialSit_Shoes_Stand\",\r\n    \"Info\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

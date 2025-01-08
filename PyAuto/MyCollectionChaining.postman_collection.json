@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "692cfb56-bca4-4a4f-8fe0-717e7f9ec49b",
+		"name": "MyCollectionChaining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40175730"
+	},
+	"item": [
+		{
+			"name": "PostRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsondata=JSON.parse(responseBody);\r",
+							"pm.environment.set(\"id\", jsondata.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"techshekhar82@gmail.com\",\r\n            \"first_name\": \"Shekhar\",\r\n            \"last_name\": \"babu\",\r\n            \"avatar\": \"https://reqres.in/img/faces/300-image.jpg\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRequest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//local variable\r",
+							"pm.variables.set(\"url_local\",\"https://reqres.in\");\r",
+							"\r",
+							"//global variable\r",
+							"pm.globals.set(\"userid_global\",\"2\");\r",
+							"\r",
+							"//environment variable\r",
+							"pm.environment.set(\"userid_env\",\"2\")\r",
+							"\r",
+							"//collection variable\r",
+							"pm.collectionVariables.set(\"userid_collect\",\"2\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{id}}\n\n",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{id}}\n\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutRequest",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"last_name\": \"Jadaun\"\r\n    \r\n    \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/972",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"972"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "userid_collect",
+			"value": ""
+		}
+	]
+}
